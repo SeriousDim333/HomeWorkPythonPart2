@@ -5,6 +5,7 @@
 
 number = int(input("введите число: "))
 result = ""
+hex_result = hex(number)
 
 
 while number > 0:
@@ -25,3 +26,6 @@ while number > 0:
     number //= 16
 
 print(result)
+
+if result == hex_result[2:]:
+    print("все ок")
