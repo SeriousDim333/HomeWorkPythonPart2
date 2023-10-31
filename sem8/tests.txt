@@ -1,0 +1,396 @@
+Не все тесты пройдены, есть ошибки :(
+
+
+Количество затраченных попыток: 1
+
+Время выполнения: 2.900252 сек
+
+Общая статистика
+
+Всего тестов: 5. Пройдено: 0. Не пройдено: 5.
+
+Подробную информацию по каждому тесту смотрите ниже.
+Тест 1
+Тест не пройден ✗
+
+Формулировка:
+
+* Итоговый код для проверки. Иногда добавляем что-то от себя :)
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+import os
+from pathlib import Path
+
+
+def get_directory_size(directory):
+    total = 0
+    try:
+        for entry in os.scandir(directory):
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_directory_size(entry.path)
+    except NotADirectoryError:
+        # Если встретился не каталог, а файл, то вернётся его размер
+        return os.path.getsize(directory)
+    except PermissionError:
+        # Если папка не открывается, вернётся 0
+        return 0
+    return total
+
+
+def traverse_directory(directory):
+    new_list = []
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for file in filenames:
+            new_dict = {}
+            if os.path.isfile(os.path.join(dirpath, file)):
+                new_dict["path"] = os.path.join(dirpath, file)
+                new_dict["type"] = "file"
+                new_dict["size"] = os.path.getsize(os.path.join(dirpath, file))
+                new_list.append(new_dict)
+        for dir in dirnames:
+            new_dict = {}
+            if os.path.isdir(os.path.join(dirpath, dir)):
+                new_dict["Path"] = os.path.join(dirpath, dir)
+                new_dict["Type"] = "dir"
+                new_dict["Size"] = get_directory_size(
+                    os.path.join(dirpath, file))
+                new_list.append(new_dict)
+    return new_list 
+
+
+directory = 'geekbrains'
+results = traverse_directory(directory)
+print(results)
+
+
+
+Ожидаемый ответ:
+
+[{'Path': 'geekbrains/california_housing_train.csv', 'Type': 'File', 'Size': 1457}, {'Path': 'geekbrains/student_performance.txt', 'Type': 'File', 'Size': 21}, {'Path': 'geekbrains/covid.json', 'Type': 'File', 'Size': 35228079}, {'Path': 'geekbrains/input2.txt', 'Type': 'File', 'Size': 9}, {'Path': 'geekbrains/avg_list.txt', 'Type': 'File', 'Size': 21}, {'Path': 'geekbrains/age_report.csv', 'Type': 'File', 'Size': 85}, {'Path': 'geekbrains/my_ds_projects', 'Type': 'Directory', 'Size': 684}, {'Path': 'geekbrains/my_ds_projects/My-code', 'Type': 'Directory', 'Size': 342}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data', 'Type': 'Directory', 'Size': 171}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/fruits.csv', 'Type': 'File', 'Size': 101}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/list_of_names.txt', 'Type': 'File', 'Size': 70}]
+
+Ошибка:
+
+Traceback (most recent call last):
+  File "40ABRK2XCT73RYJK9RKK.py", line 51, in <module>
+    results = traverse_directory(directory)
+  File "40ABRK2XCT73RYJK9RKK.py", line 44, in traverse_directory
+    new_dict["Size"] = get_directory_size(
+  File "40ABRK2XCT73RYJK9RKK.py", line 15, in get_directory_size
+    for entry in os.scandir(directory):
+FileNotFoundError: [Errno 2] No such file or directory: 'geekbrains/my_ds_projects/age_report.csv'
+Тест 2
+Тест не пройден ✗
+
+Формулировка:
+
+* Итоговый код для проверки. Иногда добавляем что-то от себя :)
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+import os
+from pathlib import Path
+
+
+def get_directory_size(directory):
+    total = 0
+    try:
+        for entry in os.scandir(directory):
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_directory_size(entry.path)
+    except NotADirectoryError:
+        # Если встретился не каталог, а файл, то вернётся его размер
+        return os.path.getsize(directory)
+    except PermissionError:
+        # Если папка не открывается, вернётся 0
+        return 0
+    return total
+
+
+def traverse_directory(directory):
+    new_list = []
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for file in filenames:
+            new_dict = {}
+            if os.path.isfile(os.path.join(dirpath, file)):
+                new_dict["path"] = os.path.join(dirpath, file)
+                new_dict["type"] = "file"
+                new_dict["size"] = os.path.getsize(os.path.join(dirpath, file))
+                new_list.append(new_dict)
+        for dir in dirnames:
+            new_dict = {}
+            if os.path.isdir(os.path.join(dirpath, dir)):
+                new_dict["Path"] = os.path.join(dirpath, dir)
+                new_dict["Type"] = "dir"
+                new_dict["Size"] = get_directory_size(
+                    os.path.join(dirpath, file))
+                new_list.append(new_dict)
+    return new_list 
+
+
+directory = 'geekbrains/my_ds_projects'
+results = traverse_directory(directory)
+print(results)
+
+
+
+Ожидаемый ответ:
+
+[{'Path': 'geekbrains/my_ds_projects/My-code', 'Type': 'Directory', 'Size': 342}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data', 'Type': 'Directory', 'Size': 171}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/fruits.csv', 'Type': 'File', 'Size': 101}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/list_of_names.txt', 'Type': 'File', 'Size': 70}]
+
+Ошибка:
+
+Traceback (most recent call last):
+  File "CFU0MS7VGVVWBVZ3OJ3B.py", line 51, in <module>
+    results = traverse_directory(directory)
+  File "CFU0MS7VGVVWBVZ3OJ3B.py", line 45, in traverse_directory
+    os.path.join(dirpath, file))
+UnboundLocalError: local variable 'file' referenced before assignment
+Тест 3
+Тест не пройден ✗
+
+Формулировка:
+
+* Итоговый код для проверки. Иногда добавляем что-то от себя :)
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+import os
+from pathlib import Path
+
+
+def get_directory_size(directory):
+    total = 0
+    try:
+        for entry in os.scandir(directory):
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_directory_size(entry.path)
+    except NotADirectoryError:
+        # Если встретился не каталог, а файл, то вернётся его размер
+        return os.path.getsize(directory)
+    except PermissionError:
+        # Если папка не открывается, вернётся 0
+        return 0
+    return total
+
+
+def traverse_directory(directory):
+    new_list = []
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for file in filenames:
+            new_dict = {}
+            if os.path.isfile(os.path.join(dirpath, file)):
+                new_dict["path"] = os.path.join(dirpath, file)
+                new_dict["type"] = "file"
+                new_dict["size"] = os.path.getsize(os.path.join(dirpath, file))
+                new_list.append(new_dict)
+        for dir in dirnames:
+            new_dict = {}
+            if os.path.isdir(os.path.join(dirpath, dir)):
+                new_dict["Path"] = os.path.join(dirpath, dir)
+                new_dict["Type"] = "dir"
+                new_dict["Size"] = get_directory_size(
+                    os.path.join(dirpath, file))
+                new_list.append(new_dict)
+    return new_list 
+
+
+directory = 'geekbrains'
+results = traverse_directory(directory)
+save_results_to_json(results, 'results.json')
+
+with open('results.json', 'r') as f:
+    data = json.load(f)
+
+print(data)
+
+
+
+Ожидаемый ответ:
+
+[{'Path': 'geekbrains/california_housing_train.csv', 'Type': 'File', 'Size': 1457}, {'Path': 'geekbrains/student_performance.txt', 'Type': 'File', 'Size': 21}, {'Path': 'geekbrains/covid.json', 'Type': 'File', 'Size': 35228079}, {'Path': 'geekbrains/input2.txt', 'Type': 'File', 'Size': 9}, {'Path': 'geekbrains/avg_list.txt', 'Type': 'File', 'Size': 21}, {'Path': 'geekbrains/age_report.csv', 'Type': 'File', 'Size': 85}, {'Path': 'geekbrains/my_ds_projects', 'Type': 'Directory', 'Size': 684}, {'Path': 'geekbrains/my_ds_projects/My-code', 'Type': 'Directory', 'Size': 342}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data', 'Type': 'Directory', 'Size': 171}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/fruits.csv', 'Type': 'File', 'Size': 101}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/list_of_names.txt', 'Type': 'File', 'Size': 70}]
+
+Ошибка:
+
+Traceback (most recent call last):
+  File "WHWBT5I25UORUK88H5WK.py", line 51, in <module>
+    results = traverse_directory(directory)
+  File "WHWBT5I25UORUK88H5WK.py", line 44, in traverse_directory
+    new_dict["Size"] = get_directory_size(
+  File "WHWBT5I25UORUK88H5WK.py", line 15, in get_directory_size
+    for entry in os.scandir(directory):
+FileNotFoundError: [Errno 2] No such file or directory: 'geekbrains/my_ds_projects/age_report.csv'
+Тест 4
+Тест не пройден ✗
+
+Формулировка:
+
+* Итоговый код для проверки. Иногда добавляем что-то от себя :)
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+import os
+from pathlib import Path
+
+
+def get_directory_size(directory):
+    total = 0
+    try:
+        for entry in os.scandir(directory):
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_directory_size(entry.path)
+    except NotADirectoryError:
+        # Если встретился не каталог, а файл, то вернётся его размер
+        return os.path.getsize(directory)
+    except PermissionError:
+        # Если папка не открывается, вернётся 0
+        return 0
+    return total
+
+
+def traverse_directory(directory):
+    new_list = []
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for file in filenames:
+            new_dict = {}
+            if os.path.isfile(os.path.join(dirpath, file)):
+                new_dict["path"] = os.path.join(dirpath, file)
+                new_dict["type"] = "file"
+                new_dict["size"] = os.path.getsize(os.path.join(dirpath, file))
+                new_list.append(new_dict)
+        for dir in dirnames:
+            new_dict = {}
+            if os.path.isdir(os.path.join(dirpath, dir)):
+                new_dict["Path"] = os.path.join(dirpath, dir)
+                new_dict["Type"] = "dir"
+                new_dict["Size"] = get_directory_size(
+                    os.path.join(dirpath, file))
+                new_list.append(new_dict)
+    return new_list 
+
+
+directory = 'geekbrains'
+results = traverse_directory(directory)
+save_results_to_csv(results, 'results.csv')
+
+with open('results.csv', 'r', newline='') as f:
+    reader = csv.reader(f)
+    data = [row for row in reader]
+
+print(data)
+
+
+
+Ожидаемый ответ:
+
+[['Path', 'Type', 'Size'], ['geekbrains/california_housing_train.csv', 'File', '1457'], ['geekbrains/student_performance.txt', 'File', '21'], ['geekbrains/covid.json', 'File', '35228079'], ['geekbrains/input2.txt', 'File', '9'], ['geekbrains/avg_list.txt', 'File', '21'], ['geekbrains/age_report.csv', 'File', '85'], ['geekbrains/my_ds_projects', 'Directory', '684'], ['geekbrains/my_ds_projects/My-code', 'Directory', '342'], ['geekbrains/my_ds_projects/My-code/GB_data', 'Directory', '171'], ['geekbrains/my_ds_projects/My-code/GB_data/fruits.csv', 'File', '101'], ['geekbrains/my_ds_projects/My-code/GB_data/list_of_names.txt', 'File', '70']]
+
+Ошибка:
+
+Traceback (most recent call last):
+  File "FUNGZVCK0UYVUAQYXNTH.py", line 51, in <module>
+    results = traverse_directory(directory)
+  File "FUNGZVCK0UYVUAQYXNTH.py", line 44, in traverse_directory
+    new_dict["Size"] = get_directory_size(
+  File "FUNGZVCK0UYVUAQYXNTH.py", line 15, in get_directory_size
+    for entry in os.scandir(directory):
+FileNotFoundError: [Errno 2] No such file or directory: 'geekbrains/my_ds_projects/age_report.csv'
+Тест 5
+Тест не пройден ✗
+
+Формулировка:
+
+* Итоговый код для проверки. Иногда добавляем что-то от себя :)
+
+import warnings
+
+warnings.filterwarnings('ignore')
+
+# Введите ваше решение ниже
+import os
+from pathlib import Path
+
+
+def get_directory_size(directory):
+    total = 0
+    try:
+        for entry in os.scandir(directory):
+            if entry.is_file():
+                total += entry.stat().st_size
+            elif entry.is_dir():
+                total += get_directory_size(entry.path)
+    except NotADirectoryError:
+        # Если встретился не каталог, а файл, то вернётся его размер
+        return os.path.getsize(directory)
+    except PermissionError:
+        # Если папка не открывается, вернётся 0
+        return 0
+    return total
+
+
+def traverse_directory(directory):
+    new_list = []
+    for dirpath, dirnames, filenames in os.walk(directory):
+        for file in filenames:
+            new_dict = {}
+            if os.path.isfile(os.path.join(dirpath, file)):
+                new_dict["path"] = os.path.join(dirpath, file)
+                new_dict["type"] = "file"
+                new_dict["size"] = os.path.getsize(os.path.join(dirpath, file))
+                new_list.append(new_dict)
+        for dir in dirnames:
+            new_dict = {}
+            if os.path.isdir(os.path.join(dirpath, dir)):
+                new_dict["Path"] = os.path.join(dirpath, dir)
+                new_dict["Type"] = "dir"
+                new_dict["Size"] = get_directory_size(
+                    os.path.join(dirpath, file))
+                new_list.append(new_dict)
+    return new_list 
+
+
+directory = 'geekbrains'
+results = traverse_directory(directory)
+save_results_to_pickle(results, 'results.pkl')
+
+with open('results.pkl', 'rb') as f:
+    data = pickle.load(f)
+
+print(data)
+
+
+
+Ожидаемый ответ:
+
+[{'Path': 'geekbrains/california_housing_train.csv', 'Type': 'File', 'Size': 1457}, {'Path': 'geekbrains/student_performance.txt', 'Type': 'File', 'Size': 21}, {'Path': 'geekbrains/covid.json', 'Type': 'File', 'Size': 35228079}, {'Path': 'geekbrains/input2.txt', 'Type': 'File', 'Size': 9}, {'Path': 'geekbrains/avg_list.txt', 'Type': 'File', 'Size': 21}, {'Path': 'geekbrains/age_report.csv', 'Type': 'File', 'Size': 85}, {'Path': 'geekbrains/my_ds_projects', 'Type': 'Directory', 'Size': 684}, {'Path': 'geekbrains/my_ds_projects/My-code', 'Type': 'Directory', 'Size': 342}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data', 'Type': 'Directory', 'Size': 171}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/fruits.csv', 'Type': 'File', 'Size': 101}, {'Path': 'geekbrains/my_ds_projects/My-code/GB_data/list_of_names.txt', 'Type': 'File', 'Size': 70}]
+
+Ошибка:
+
+Traceback (most recent call last):
+  File "EW5IX49FF4QEGVTKAYSL.py", line 51, in <module>
+    results = traverse_directory(directory)
+  File "EW5IX49FF4QEGVTKAYSL.py", line 44, in traverse_directory
+    new_dict["Size"] = get_directory_size(
+  File "EW5IX49FF4QEGVTKAYSL.py", line 15, in get_directory_size
+    for entry in os.scandir(directory):
+FileNotFoundError: [Errno 2] No such file or directory: 'geekbrains/my_ds_projects/age_report.csv'
